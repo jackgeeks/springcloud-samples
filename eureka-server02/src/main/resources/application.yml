@@ -1,0 +1,17 @@
+server:
+  port: 9091
+spring:
+  application:
+    name: eureka-server
+  security:
+    user:
+      name: "user"
+      password: "admin"
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true #如果设置了eureka.instance.ip-address 属性，则使用该属性配置的IP
+    instance-id: ${spring.application.name}:${server.port} #实例id
+  client:
+    service-url: # EurekaServer的地址，现在是自己的地址，如果是集群，需要加上其它Server的地址。
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:9090/eureka/,http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:9091/eureka/
