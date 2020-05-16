@@ -1,0 +1,34 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: ribbon
+  security:
+    user:
+      name: "user"
+      password: "admin"
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true # 开启Spring Cloud的重试功能
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true #如果设置了eureka.instance.ip-address 属性，则使用该属性配置的IP
+    instance-id: ${spring.application.name}:${server.port} #实例id
+  client:
+    service-url: # EurekaServer的地址，现在是自己的地址，如果是集群，需要加上其它Server的地址。
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:9090/eureka/,http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:9091/eureka/
+    registry-fetch-interval-seconds: 5 #从eureka服务器注册表中获取注册信息的时间间隔（s），默认为30秒
+##配置重试
+paymeny: #服务名
+  ribbon:
+    ConnectTimeout: 250 # Ribbon的连接超时时间
+    ReadTimeout: 1000 # Ribbon的数据读取超时时间
+    OkToRetryOnAllOperations: true # 是否对所有操作都进行重试
+    MaxAutoRetriesNextServer: 1 # 切换实例的重试次数
+    MaxAutoRetries: 1 # 对当前实例的重试次数
+## 日志
+logging:
+  level:
+    root: debug
