@@ -12,6 +12,9 @@
         <module>eureka-server01</module>
         <module>eureka-server02</module>
         <module>consumer</module>
+        <module>payment01</module>
+        <module>paymeny02</module>
+        <module>ribbon</module>
     </modules>
     <groupId>com.wpp</groupId>
     <artifactId>springcloud-samples</artifactId>
@@ -27,10 +30,17 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
