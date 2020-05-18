@@ -15,6 +15,7 @@
         <module>payment01</module>
         <module>paymeny02</module>
         <module>ribbon</module>
+        <module>openfeign</module>
     </modules>
     <groupId>com.wpp</groupId>
     <artifactId>springcloud-samples</artifactId>

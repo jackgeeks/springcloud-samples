@@ -1,6 +1,8 @@
 server:
   port: 8082
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
   application:
     name: payment
   security:
