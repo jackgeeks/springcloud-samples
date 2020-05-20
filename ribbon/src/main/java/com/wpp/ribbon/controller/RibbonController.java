@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 /**
  * @Author: jackgeeks
  * @ProjectName: springcloud-samples
- * @Package: com.wpp.ribbon.controller
+ * @Package: com.wpp.ribbon.com.wpp.hystrixorder.controller
  * @ClassName: RibbonController
  * @Description: @todo
  * @CreateDate: 2020/5/16 21:50
