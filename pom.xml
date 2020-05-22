@@ -20,6 +20,7 @@
         <module>hystrix-order</module>
         <module>hystrix-feign</module>
         <module>hystrix-dashboard</module>
+        <module>zuul-server</module>
     </modules>
     <groupId>com.wpp</groupId>
     <artifactId>springcloud-samples</artifactId>
