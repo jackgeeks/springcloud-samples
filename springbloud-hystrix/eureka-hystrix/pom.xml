@@ -8,9 +8,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>com.wpp</groupId>
-    <artifactId>ribbon-eureka</artifactId>
+    <artifactId>hystrix-eureka</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ribbon-eureka</name>
+    <name>hystrix-eureka</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
