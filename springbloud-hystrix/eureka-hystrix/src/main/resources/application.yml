@@ -1,8 +1,8 @@
 server:
-  port: 9090
+  port: 9092
 spring:
   application:
-    name: ribbon-eureka
+    name: eureka-alone
 eureka:
   instance:
     hostname: localhost
