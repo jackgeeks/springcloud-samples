@@ -1,0 +1,39 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true   #开启从注册中心动态创建路由的功能，利用微服务名进行路由
+      routes:
+        - id: hystrix-order #hystrix-order    #路由的ID，没有固定规则但要求唯一，简易配合服务名
+          #uri: http://localhost:8001         #匹配后提供服务的路由地址
+          uri: lb://hystrix-order   #匹配后提供服务的路由地址
+          predicates:
+            - Path=/**          #断言，路径相匹配的进行路由
+            #- After=2020-03-15T15:35:07.412+08:00[GMT+08:00]
+            #- Cookie=username,zzyy
+            #- Header=X-Request-Id, \d+ #请求头要有X-Request-Id属性并且值为整数的正则表达式
+            #- Host=**.atguigu.com
+            #- Method=GET
+            #- Query=username, \d+ #要有参数名username并且值还要啥整数才能路由
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true #如果设置了eureka.instance.ip-address 属性，则使用该属性配置的IP
+    instance-id: ${spring.application.name}:${server.port} #实例id
+  client:
+    service-url: # EurekaServer的地址，现在是自己的地址，如果是集群，需要加上其它Server的地址。
+      defaultZone: http://${eureka.instance.hostname}:9092/eureka/
+    registry-fetch-interval-seconds: 5 #从eureka服务器注册表中获取注册信息的时间间隔（s），默认为30秒
+  ## zuul配置
+zuul:
+  retryable: true #重试机制
+  prefix: /api #配置前缀
+  routes:
+    hystrix-order:
+      path: /hystrix/**
+      service-id: hystrix-order
