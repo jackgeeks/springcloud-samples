@@ -1,0 +1,36 @@
+server:
+  port: 8011
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/jackgeeks/config.git #github仓库上面的git仓库名字
+          ##搜索目录
+          search-paths:
+            - cloud-config
+      #读取分支
+      label: master
+  #rabbit相关配置 15672是web管理界面的端口，5672是MQ访问的端口
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true #如果设置了eureka.instance.ip-address 属性，则使用该属性配置的IP
+    instance-id: ${spring.application.name}:${server.port} #实例id
+  client:
+    service-url: # EurekaServer的地址，现在是自己的地址，如果是集群，需要加上其它Server的地址。
+      defaultZone: http://${eureka.instance.hostname}:9092/eureka/
+    registry-fetch-interval-seconds: 5 #从eureka服务器注册表中获取注册信息的时间间隔（s），默认为30秒
+#rabbitmq相关配置，暴露bus刷新配置的端点
+management:
+  endpoints:  #暴露bus刷新配置的端点
+    web:
+      exposure:
+        include: 'bus-refresh'  #凡是暴露监控、刷新的都要有actuator依赖，bus-refresh就是actuator的刷新操作
