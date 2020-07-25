@@ -1,0 +1,37 @@
+server:
+  port: 8088
+spring:
+  application:
+    name: zuul-server
+  redis:
+    host: 47.115.172.73
+    port: 7379
+    password: root123
+    database: 0
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true #如果设置了eureka.instance.ip-address 属性，则使用该属性配置的IP
+    instance-id: ${spring.application.name}:${server.port} #实例id
+  client:
+    service-url: # EurekaServer的地址，现在是自己的地址，如果是集群，需要加上其它Server的地址。
+      defaultZone: http://${eureka.instance.hostname}:9092/eureka/
+    registry-fetch-interval-seconds: 5 #从eureka服务器注册表中获取注册信息的时间间隔（s），默认为30秒
+  ## zuul配置
+zuul:
+  retryable: true #重试机制
+  prefix: /api #配置前缀
+  routes:
+    hystrix-order:
+      path: /hystrix/**
+      service-id: hystrix-order
+  # 配置限流
+  ratelimit:
+    enabled: true
+    # 对应存储类型(用来统计存储统计信息)
+    repository: REDIS
+    default-policy:
+      limit: 1
+      quota: 2
+      refresh-interval: 3
+  #以上配置表示启用限流策略，并且所有服务在3秒内只能有1次请求且所有请求时间总和不得超过2秒
